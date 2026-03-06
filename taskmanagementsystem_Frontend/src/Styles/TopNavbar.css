@@ -1,0 +1,288 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   TOP NAVBAR
+   ══════════════════════════════════════════════════════════════════════════ */
+.top-navbar {
+  position: fixed;
+  top: 0;
+  left: 220px;
+  width: calc(100% - 220px);
+  height: 80px;                        /* ✅ sync with --topnav-height in Navbar.css */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #d1d5db;
+  z-index: 999;
+  box-sizing: border-box;
+  transition: left 0.3s ease, width 0.3s ease;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LEFT — search
+   ══════════════════════════════════════════════════════════════════════════ */
+.top-navbar-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid red;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border: none;
+  font-size: 14px;
+  outline: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  background: transparent;
+}
+
+.search-wrapper input::placeholder {
+  color: #6b7280;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+  color: #6b7280;
+}
+
+.search-wrapper.light {
+  background-color: #f3f4f6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-wrapper.light input {
+  color: #111827;
+}
+
+.search-wrapper.dark {
+  background-color: #1f2937;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  border: 1px solid yellow;
+}
+
+.search-wrapper.dark input {
+  color: #f3f4f6;
+  background: transparent;
+}
+
+.top-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;   /* controls equal spacing */
+}
+.nav-link {
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 6px 10px;
+  transition: color 0.25s ease, background-color 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  border-radius: 4px;
+}
+
+/* Red underline indicator (hidden by default) */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  background-color: red;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Show underline on selected/active link */
+.nav-link.active::after {
+  opacity: 1;
+}
+
+/* ── Light mode ── */
+.top-navbar .nav-link {
+  color: #333;
+}
+
+.top-navbar .nav-link:hover {
+  background-color: #e8e9ec;
+  color: #007bff;
+}
+
+/* ✅ Persistent highlight when selected */
+.top-navbar .nav-link.active {
+  color: #007bff;
+  background-color: #e8e9ec; /* stays highlighted after click */
+}
+
+/* ── Dark mode ── */
+.top-navbar.dark .nav-link {
+  color: #e4e4e4;
+}
+
+.top-navbar.dark .nav-link:hover {
+  color: #ffcc00;
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* ✅ Persistent highlight in dark mode */
+.top-navbar.dark .nav-link.active {
+  color: #ffcc00;
+  background-color: rgba(255, 255, 255, 0.07); /* stays highlighted after click */
+}
+
+.download-btn {
+  height: 25px;
+  width: 110px;
+  padding: 0 14px;
+  border-radius: 6px;
+  background: #d5cc4b;
+  color: whitesmoke;
+  border: 2px solid red;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+/* hover effect */
+.download-btn:hover {
+  background-color: rgba(128,128,128,0.667);
+  border: 2px solid white;
+  color: #000000cc;
+  transform: translate(2px,2px);
+}
+
+/* click effect */
+.download-btn:active {
+ transform: scale(0.98);
+}
+
+/* dark mode support */
+.top-navbar.dark .download-btn {
+   background-color: #785bc1;
+  color: #f3f4f6;
+  border: 2px solid rgb(201, 234, 13);
+}
+
+.top-navbar.dark .download-btn:hover {
+ opacity: 0.8;
+  background-color: #9ca3af;
+  color: black;
+  border: 2px solid rgb(211, 58, 12);
+}
+
+.top-navbar.dark .download-btn:active {
+ background-color: #785bc1;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   DARK MODE TOGGLE
+   ══════════════════════════════════════════════════════════════════════════ */
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-switch label {
+  display: block;
+  cursor: pointer;
+  border-radius: 30px;
+  background-color: #ccc;
+  position: relative;
+  height: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-switch-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: #333;
+  transition: left 0.3s ease, background-color 0.3s ease;
+}
+
+.toggle-switch input:checked + label {
+  background-color: #d87070;
+}
+
+.toggle-switch input:checked + label .toggle-switch-circle {
+  left: 26px;
+  color: white;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   DARK MODE
+   ══════════════════════════════════════════════════════════════════════════ */
+.top-navbar.dark {
+  background-color: #111;
+  color: #f3f4f6;
+}
+
+
+.top-navbar.dark .toggle-switch label {
+  background-color: #374151;
+}
+
+.top-navbar.dark .toggle-switch-circle {
+  background-color: #111;
+  color: #f3f4f6;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .top-navbar {
+    left: 0 !important;
+    width: 100% !important;
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .top-navbar-left,
+  .top-navbar-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-btn {
+    width: 100%;
+  }
+}

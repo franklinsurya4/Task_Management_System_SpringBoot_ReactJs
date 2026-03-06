@@ -1,0 +1,162 @@
+.notes-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Title */
+
+.notes-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #222;
+}
+
+body[data-theme="dark"] .notes-title {
+  color: rgb(165,165,146);
+}
+
+/* Add Note Form */
+
+.add-note {
+  background: #d4d3cc;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.add-note input {
+  border: none;
+  border-bottom: 2px solid #ddd;
+  background: transparent;
+  padding: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.add-note textarea {
+  border: none;
+  resize: none;
+  background: transparent;
+  min-height: 80px;
+  padding: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.add-note button {
+  width: 120px;
+  padding: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  border: 2px solid red;
+  background-color: #d5cc4b;
+  color: white;
+  border-radius: 5px;
+}
+
+.add-note button:hover {
+  background-color: rgba(128,128,128,0.667);
+  border: 2px solid white;
+  color: #000000cc;
+}
+
+/* NOTES GRID */
+
+.notes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 35px;                 /* MAIN GAP BETWEEN CARDS */
+  margin-top: 20px;
+}
+
+/* NOTE CARD */
+
+.note-card {
+  min-height: 100px;
+  background: #d4d3cc;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+  position: relative;
+  transition: 0.25s;
+}
+
+.note-card:hover {
+  background-color: #d4d3cc;
+}
+
+.note-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.note-card p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* Delete Button */
+
+.note-card button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  border: none;
+  padding: 6px 12px;
+  background: #e53935;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.note-card button:hover {
+  background: #c62828;
+}
+
+/* DARK MODE */
+body[data-theme="dark"] .notes-page .notes-title {
+  color: #d2c296;
+}
+
+body[data-theme="dark"] .add-note {
+  background: #585555;
+  color: white;
+}
+
+body[data-theme="dark"] .add-note input,
+body[data-theme="dark"] .add-note textarea {
+  color: white;
+  border-bottom: 1px solid #777;
+}
+
+body[data-theme="dark"] .add-note button {
+  background-color: #785bc1;
+  color: #f3f4f6;
+  border: 2px solid rgb(201,234,13);
+}
+
+body[data-theme="dark"] .add-note button:hover {
+  background-color: #666;
+  border-color: #888;
+  color: black;
+  transform: translate(2px,2px);
+  transition: transform 0.3s ease;
+}
+
+body[data-theme="dark"] .note-card {
+  background: #585555;
+  color: white;
+}
+
+body[data-theme="dark"] .note-card p {
+  color: #ddd;
+}

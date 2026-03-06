@@ -1,0 +1,62 @@
+/* ===== Main Container ===== */
+.tasks-view-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #f2f3f5;
+  transition: 0.3s ease;
+}
+
+/* Dark Mode */
+.tasks-view-container.dark {
+  background: #121212;
+}
+
+/* ===== Grid Layout Wrapper ===== */
+.tasks-view-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;   /* 🔥 Space between top row and bottom row */
+}
+
+/* ===== Top Row (Calendar + Chart) ===== */
+.tasks-top-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;   /* 🔥 Space between calendar and chart */
+}
+
+/* ===== Bottom Row ===== */
+.tasks-bottom-row {
+  display: flex;
+}
+
+
+/* ===== Card Styling ===== */
+.tasks-card {
+  background: #eae6e6;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  transition: 0.3s ease;
+}
+
+/* Dark mode card */
+.tasks-view-container.dark .tasks-card {
+  background: #1e1e1e;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Optional: Make bottom table take full width */
+.table-card {
+  width: 100%;
+}
+
+/* Optional: Responsive Layout */
+@media (max-width: 992px) {
+  .tasks-top-row {
+    grid-template-columns: 1fr;  /* Stack vertically */
+  }
+}

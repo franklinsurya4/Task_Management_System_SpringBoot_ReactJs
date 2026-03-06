@@ -1,0 +1,167 @@
+/* ===== Notification Page Container ===== */
+
+.notification-container {
+  padding: 25px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #d8dadc;
+ margin-top: 40px;
+}
+
+/* ===== Page Title ===== */
+
+.notification-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  gap: 5px;
+}
+
+/* ===== Task Card Layout ===== */
+
+.notification-card {
+  background: var(--card-bg);
+  padding: 18px 22px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+  border:2px solid black;
+  width: 1050px;
+}
+
+.notification-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ===== Task Info Section ===== */
+
+.task-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.task-status {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ff9800;
+}
+
+.task-date {
+  font-size: 13px;
+  margin-top: 3px;
+  opacity: 0.7;
+}
+
+/* ===== Email Button ===== */
+
+.reminder-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  background: #d5cc4b;
+  border: 2px solid red;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.reminder-btn:hover {
+  background-color: rgba(128,128,128,0.667);
+  border: 2px solid white;
+  color: #000000cc;
+  transform: translate(2px,2px);
+}
+
+/* ✅ Bottom Back Button */
+.back-btn-container {
+  margin-top: auto; /* pushes button to bottom */
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+/* Back button styling */
+.bottom-back-btn {
+  min-width: 300px;
+  height: 50px;
+  padding: 0 14px;
+  border-radius: 6px;
+  background: #d5cc4b;
+  border: 2px solid red;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+  margin-left: 450px;
+}
+
+.bottom-back-btn:hover {
+  background-color: rgba(128,128,128,0.667);
+  border: 2px solid white;
+  color: #000000cc;
+  transform: translate(2px,2px);
+}
+
+/* ===== Dark Mode ===== */
+
+.notification-container.dark  {
+  background-color: rgb(65, 64, 64);
+}
+
+[data-theme="dark"] .notification-card {
+  background: #1e1e1e;
+}
+
+[data-theme="dark"] .task-status {
+  color: #ffa726;
+}
+
+.notification-container.dark .task-title{
+  color: whitesmoke;
+}
+
+.notification-container.dark .reminder-btn{
+  background-color: #785bc1;
+  color: #f3f4f6;
+  border: 2px solid rgb(201, 234, 13);
+}
+
+.notification-container.dark .reminder-btn:hover{
+  opacity: 0.8;
+  background-color: #9ca3af;
+  color: black;
+  border: 2px solid rgb(211, 58, 12);
+}
+
+.notification-container.dark .bottom-back-btn {
+  background-color: #785bc1;
+  color: #f3f4f6;
+  border: 2px solid rgb(201, 234, 13);
+}
+
+.notification-container.dark .bottom-back-btn:hover {
+  opacity: 0.8;
+  background-color: #9ca3af;
+  color: black;
+  border: 2px solid rgb(211, 58, 12);
+}
+
+.notification-container.dark .notification-title {
+  color: #d2c296;
+  text-align: center;
+}

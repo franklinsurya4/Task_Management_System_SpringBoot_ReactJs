@@ -1,0 +1,123 @@
+.certificate-wrapper {
+  text-align: center;
+  padding: 30px;
+  background: #f4f6f9;
+  min-height: 100vh;
+}
+
+.certificate {
+  background: white;
+  width: 1000px;
+  margin: auto;
+  padding: 60px;
+  border: 10px solid #1e3a8a;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  font-size: 48px;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.name {
+  font-size: 42px;
+  font-weight: bold;
+  margin: 30px 0;
+  color: #111;
+}
+
+.badge {
+  display: inline-block;
+  padding: 15px 40px;
+  background: #2563eb;
+  color: white;
+  font-size: 24px;
+  border-radius: 50px;
+  margin: 20px 0;
+}
+
+.footer-text {
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+.signature-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 80px;
+}
+
+.signature-line {
+  width: 200px;
+  border-bottom: 2px solid black;
+  margin-bottom: 10px;
+}
+
+.download-btn {
+  margin-top: 30px;
+  padding: 12px 30px;
+  font-size: 18px;
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background: #162c66;
+}
+
+/* ========================== */
+/* DARK MODE */
+/* ========================== */
+
+.certificate-wrapper.dark {
+  background: #0f172a;
+}
+
+.certificate-wrapper.dark .certificate {
+  background: #1e293b;
+  border: 10px solid #3b82f6;
+  color: #f1f5f9;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.certificate-wrapper.dark .title {
+  color: #60a5fa;
+}
+
+.certificate-wrapper.dark .subtitle {
+  color: #cbd5e1;
+}
+
+.certificate-wrapper.dark .name {
+  color: #ffffff;
+}
+
+.certificate-wrapper.dark .badge {
+  background: #3b82f6;
+}
+
+.certificate-wrapper.dark .footer-text {
+  color: #e2e8f0;
+}
+
+.certificate-wrapper.dark .signature-line {
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.certificate-wrapper.dark .download-btn {
+  background: #3b82f6;
+}
+
+.certificate-wrapper.dark .download-btn:hover {
+  background: #2563eb;
+}

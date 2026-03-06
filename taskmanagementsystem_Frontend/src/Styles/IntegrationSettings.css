@@ -1,0 +1,219 @@
+/* IntegrationSettings.css */
+.integration-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: "Inter", sans-serif;
+  background: #f5f7fa;
+  min-height: 30vh;
+  transition: 0.3s ease;
+}
+
+/* Header styling */
+.integration-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 30px;
+}
+
+.integration-header .integration-icon {
+  margin-right: 10px;
+  font-size: 28px;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode header */
+.integration-container.dark .integration-header {
+  color: #d2c296;
+}
+
+.integration-container.dark .integration-header .integration-icon {
+  color: #d2c296; /* yellow icon in dark mode */
+}
+
+.integration-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.integration-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease-in-out;
+}
+
+.integration-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  background-color: rgba(128,128,128,0.667);
+  border: 2px solid white;
+}
+
+.integration-card h3 {
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.status {
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+.status-connected {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.status-disconnected {
+  color: #c62828;
+  font-weight: bold;
+}
+
+.connect-btn,
+.disconnect-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  width: 100%;
+  transition: 0.2s ease;
+}
+
+.connect-btn {
+  background-color: whitesmoke;
+  border: 1px solid #d32f2f;
+  color: black;
+}
+
+.connect-btn:hover {
+  background-color: #1565c0;
+}
+
+.disconnect-btn {
+  background-color: whitesmoke;
+  border: 1px solid red;
+  color: black;
+}
+
+.disconnect-btn:hover {
+  background-color: #b71c1c;
+}
+
+.error-box {
+  background: #ffebee;
+  color: #b71c1c;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+/* Back button styling */
+.back-button-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.integration-back-button {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 6px;
+  background: #d5cc4b;
+  border: 2px solid red;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+  width: 320px;
+  height: 50px;
+}
+
+.integration-back-button:hover {
+  background-color: rgba(128,128,128,0.667);
+  border: 2px solid white;
+  color: #000000cc;
+  transform: translate(2px,2px);
+}
+
+/* ============================= */
+/* DARK MODE */
+/* ============================= */
+.integration-container.dark {
+  background: #00000007;
+}
+
+.integration-container.dark h2 {
+  color: #d2c296;
+}
+
+.integration-container.dark .integration-card {
+  color: white;
+  background-color: rgb(74, 73, 73);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  border: 2px solid white;
+}
+
+.integration-container.dark .integration-card:hover {
+  background-color: #1a1a1a;
+  border: 1px solid #4dabff
+}
+
+.integration-container.dark .integration-card h3 {
+  color: whitesmoke;
+}
+
+.integration-container.dark .status-connected {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.integration-container.dark.status-disconnected {
+  color: #c62828;
+  font-weight: bold;
+}
+
+.integration-container.dark .connect-btn {
+  background-color: whitesmoke;
+  border: 1px solid red;
+  color: black;
+}
+
+.integration-container.dark .connect-btn:hover {
+  background-color: #1e88e5;
+}
+
+.integration-container.dark .disconnect-btn {
+  background-color: whitesmoke;
+  border: 1px solid red;
+  color: black;
+}
+
+.integration-container.dark .disconnect-btn:hover {
+  background-color: #c62828;
+}
+
+.integration-container.dark .error-box {
+  background: #3a1f1f;
+  color: #ff6b6b;
+}
+
+.integration-container.dark .integration-back-button {
+  background-color: #785bc1;
+  color: #f3f4f6;
+  border: 2px solid rgb(201, 234, 13);
+}
+
+.integration-container.dark .integration-back-button:hover {
+  opacity: 0.8;
+  background-color: #9ca3af;
+  color: black;
+  border: 2px solid rgb(211, 58, 12);
+}

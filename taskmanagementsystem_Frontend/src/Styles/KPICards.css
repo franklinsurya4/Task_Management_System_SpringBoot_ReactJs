@@ -1,0 +1,149 @@
+/* ===========================
+   KPI CARDS CONTAINER
+=========================== */
+.kpi-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards in a row */
+  gap: 50px; /* space between cards */
+  width: 100%;
+}
+
+/* ===========================
+   COMMON KPI CARD STYLE
+=========================== */
+
+.kpi-card-total,
+.kpi-card-complete,
+.kpi-card-overdue,
+.kpi-card-risk {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 190px;
+  text-align: center;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.kpi-container.dark .kpi-card-total,
+.kpi-container.dark .kpi-card-complete,
+.kpi-container.dark .kpi-card-overdue,
+.kpi-container.dark .kpi-card-risk {
+  color: white;
+  background-color: gray;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.kpi-container.dark .kpi-card-total:hover,
+.kpi-container.dark .kpi-card-complete:hover,
+.kpi-container.dark .kpi-card-overdue:hover,
+.kpi-container.dark .kpi-card-risk:hover {
+  background-color: #1a1a1a;
+  color: whitesmoke;
+  border: 1px solid #4dabff;
+}
+
+.kpi-container.dark .kpi-card-total:hover *,
+.kpi-container.dark .kpi-card-complete:hover *,
+.kpi-container.dark .kpi-card-overdue:hover *,
+.kpi-container.dark .kpi-card-risk:hover * {
+  color: whitesmoke;
+}
+
+.kpi-container.dark p {
+  color: black;
+}
+
+.kpi-container.dark h2 {
+  color: black;
+}
+
+/* Hover effect for all KPI cards */
+.kpi-card-total:hover,
+.kpi-card-complete:hover,
+.kpi-card-overdue:hover,
+.kpi-card-risk:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ===========================
+   CARD TEXT STYLING
+=========================== */
+/* ===========================
+   CARD TEXT STYLING
+=========================== */
+.kpi-card-total p,
+.kpi-card-complete p,
+.kpi-card-overdue p,
+.kpi-card-risk p {
+  color: #252628;
+  font-size: 14px;
+  margin-bottom: 8px;   /* reduced */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.kpi-card-total h2,
+.kpi-card-complete h2,
+.kpi-card-overdue h2,
+.kpi-card-risk h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 0;        /* removed extra space */
+}
+/* ===========================
+   DIFFERENT COLORS FOR KPI TYPES (OPTIONAL)
+=========================== */
+.kpi-card-total {
+  border-left: 4px solid #6366f1; /* Indigo */
+}
+
+.kpi-container.dark .kpi-card-total:hover{
+   border: 4px solid #6366f1; /* Indigo */
+}
+
+.kpi-card-complete {
+  border-left: 4px solid #22c55e; /* Green */
+}
+
+.kpi-container.dark .kpi-card-complete:hover{
+   border: 4px solid #22c55e; /* Green */
+}
+
+.kpi-card-overdue {
+  border-left: 4px solid #ef4444; /* Red */
+}
+
+.kpi-container.dark .kpi-card-overdue:hover{
+   border: 4px solid #ef4444; /* Red */
+}
+
+.kpi-card-risk {
+  border-left: 4px solid #f59e0b; /* Amber */
+}
+
+.kpi-container.dark .kpi-card-risk:hover{
+   border: 4px solid #f59e0b; /* Amber */
+}
+
+/* ===========================
+   RESPONSIVE GRID
+=========================== */
+@media (max-width: 1024px) {
+  .kpi-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kpi-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

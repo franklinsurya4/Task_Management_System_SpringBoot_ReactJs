@@ -1,0 +1,50 @@
+/* ==============================
+   BAR CHART CONTAINER
+============================== */
+.kpi-bar-container {
+  width: 440px;
+  height: 340px;
+  padding: 20px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #ffffff, #f4f7fb);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.kpi-bar-container:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ==============================
+   DARK MODE
+============================== */
+.kpi-bar-container.dark-mode {
+  background: #1e1e1e;
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Make chart text smooth */
+.recharts-text {
+  font-weight: 500;
+}
+
+/* Smooth animation */
+.recharts-bar-rectangle {
+  transition: all 0.3s ease;
+}
+
+/* Optional: responsive height adjustment */
+@media (max-width: 768px) {
+  .kpi-bar-container {
+    height: 280px;
+    padding: 16px;
+  }
+}

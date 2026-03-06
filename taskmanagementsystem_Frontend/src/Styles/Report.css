@@ -1,0 +1,137 @@
+.report-container {
+  padding: 24px 32px;
+  background-color: #d8dadc;
+  min-height: 100vh;
+  box-sizing: border-box;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.report-header h2 {
+  margin: 0 0 0 12cm;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.download-btns {
+  padding: 10px 20px;
+  border: 2px solid red;
+  background-color: #d5cc4b;
+  color: white;
+  border-radius: 5px;
+  width: 90px;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.download-btns:hover {
+  background-color: rgba(128, 128, 128, 0.667);
+  border: 2px solid white;
+  color: #000000cc;
+}
+
+.report-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 22px;
+  
+}
+
+.chart-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 16px 20px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.3s ease;
+  border: 2px solid black;
+}
+
+.chart-card h3 {
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #34495e;
+  text-align: center;
+}
+
+.polar-labels {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  font-size: 13px;
+}
+
+.polar-labels span {
+  font-weight: 600;
+}
+
+/* ===== DARK MODE ===== */
+
+.report-container.dark {
+  background-color: #00000007;
+  color: #f1f1f1;
+}
+
+.report-container.dark .report-header h2 {
+  color:  #d2c296;;
+}
+
+.report-container.dark .chart-card {
+  background: gray;
+  border: 2px solid whitesmoke;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+}
+
+.report-container.dark .chart-card :hover{
+  background: rgb(188, 216, 112);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+}
+
+.report-container.dark .chart-card h3 {
+  color: #e0e0e0;
+  height:100%;
+}
+
+.report-container.dark .download-btns {
+  background-color: #785bc1;
+  color: #f3f4f6;
+  border: 2px solid rgb(201, 234, 13);
+}
+
+.report-container.dark .download-btns:hover {
+  background-color: #666;
+  border-color: #888;
+  color: black;
+  transform: translate(2px, 2px); /* moves 10px right, 5px down */
+  transition: transform 0.3s ease; /* smooth movement */
+}
+
+@media (max-width: 768px) {
+  .report-container {
+    padding: 16px;
+  }
+
+  .report-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .download-btn {
+    width: 100%;
+  }
+}

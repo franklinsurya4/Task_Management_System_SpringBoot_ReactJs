@@ -1,0 +1,137 @@
+/* ===========================
+   DASHBOARD CONTAINER
+=========================== */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* space between sections */
+  font-family: 'Inter', sans-serif;
+  background-color: #d8dadc;
+}
+
+.dashboard-container.dark {
+  background-color: #00000007;
+  color: #f0f0f0;
+}
+
+.dashboard-container.dark .dashboard-title {
+  color: #d2c296;
+}
+
+/* ===========================
+   DASHBOARD TITLE
+=========================== */
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* ===========================
+   KPI GRID
+=========================== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; /* space between KPI cards */
+}
+
+/* ===========================
+   CHART GRID
+=========================== */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 10px; /* space between charts */
+}
+
+/* Each chart card styling */
+.chart-card {
+  background: seashell;
+  border-radius: 20px;
+  padding: 24px;
+  min-height: 360px;
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s ease;
+
+}
+
+.dashboard-container.dark .chart-card {
+  background-color: gray;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.chart-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ===========================
+   AGING CARD
+=========================== */
+/* Default light mode */
+.aging-card {
+  background: linear-gradient(145deg, #ffffff, #f4f7fb); /* gradient for light */
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.25s ease;
+}
+
+/* Dark mode */
+.dashboard-container.dark .aging-card {
+  background: gray; /* solid dark replaces gradient */
+  color: #f0f0f0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+
+/* ===========================
+   LOADING
+=========================== */
+.loading {
+  font-size: 18px;
+  color: #6b7280;
+  text-align: center;
+  padding: 80px 0;
+}
+
+/* ===========================
+   RESPONSIVE GRID
+=========================== */
+@media (max-width: 1024px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chart-card,
+  .aging-card {
+    padding: 16px;
+    min-height: 280px;
+  }
+}
