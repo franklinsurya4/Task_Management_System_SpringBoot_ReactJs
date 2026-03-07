@@ -1,6 +1,6 @@
 package com.TaskManagementTool.Config;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -23,6 +23,9 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtFilter;
+
+    @Value("${cors.allowed-origins}")
+    private String allowedOrigins;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,24 +39,19 @@ public class SecurityConfig {
                         //Public EndPoints
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/**").permitAll() // Temporary: allow all for testing OPTIONS / CORS
+                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/api/ollama/**").permitAll()
                         .requestMatchers("/api/integrations/**").permitAll()
                         .requestMatchers("/api/notes/**").permitAll()
                         .requestMatchers("/api/todos/**").permitAll()
-
                         //Private EndPoints
                         .requestMatchers("/api/notifications/**").authenticated()
                         .requestMatchers("/api/tasks/**").authenticated()
                         .requestMatchers("/api/preferences/**").authenticated()
                         .requestMatchers("/api/system-settings/**").authenticated()
-
-
-                        .anyRequest().authenticated() // Uncomment once JWT works
+                        .anyRequest().authenticated()
                 );
-
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 
@@ -71,14 +69,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
 }
