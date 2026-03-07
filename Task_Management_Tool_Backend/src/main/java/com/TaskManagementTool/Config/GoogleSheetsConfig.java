@@ -9,7 +9,9 @@ import com.google.auth.oauth2.GoogleCredentials;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Collections;
 
 @Configuration
@@ -18,8 +20,17 @@ public class GoogleSheetsConfig {
     @Bean
     public Sheets sheetsService() throws Exception {
 
+        InputStream credentialsStream;
+        String credentialsJson = System.getenv("GOOGLE_CREDENTIALS_JSON");
+
+        if (credentialsJson != null && !credentialsJson.isEmpty()) {
+            credentialsStream = new ByteArrayInputStream(credentialsJson.getBytes());
+        } else {
+            credentialsStream = new FileInputStream("src/main/resources/credentials.json");
+        }
+
         GoogleCredentials credentials = GoogleCredentials
-                .fromStream(new FileInputStream("src/main/resources/credentials.json"))
+                .fromStream(credentialsStream)
                 .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));
 
         HttpRequestInitializer requestInitializer =
