@@ -19,16 +19,16 @@ import Profile from "./Components/SettingsPages/Profile";
 import ChangePassword from "./Components/SettingsPages/ChangePassword";
 import PreferencesPage from "./pages/PreferencesPage";
 import SystemSettings from "./Components/SystemSettings";
-
 import TodoPage from "./Components/TodoPage";
 import NotesPage from "./Components/NotesPage";
 
 import "./Styles/Global.css";
 import "./App.css";
 
-const SIDEBAR_FULL      = 220;
-const SIDEBAR_COLLAPSED = 60;
-const TOPNAV_HEIGHT     = 60;
+const SIDEBAR_FULL           = 220;
+const SIDEBAR_COLLAPSED      = 60;
+const TOPNAV_HEIGHT_DESKTOP  = 60;
+const TOPNAV_HEIGHT_MOBILE   = 52;
 
 const PROTECTED_COMPONENTS = [
   "Dashboard", "TaskGrid", "Reports", "UserList",
@@ -38,40 +38,32 @@ const PROTECTED_COMPONENTS = [
 ];
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-
-  const [activeComponent, setActiveComponent] = useState(
+  const [token,            setToken]            = useState(localStorage.getItem("token"));
+  const [activeComponent,  setActiveComponent]  = useState(
     localStorage.getItem("activeComponent") ||
     (localStorage.getItem("token") ? "Dashboard" : "TasksView")
   );
-
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
-
-  const [searchTerm, setSearchTerm]         = useState("");
+  const [darkMode,         setDarkMode]         = useState(localStorage.getItem("theme") === "dark");
+  const [searchTerm,       setSearchTerm]       = useState("");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
-  // ✅ NEW — controls mobile sidebar open/close
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  // ✅ NEW — detect if screen is mobile
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+  const [mobileOpen,       setMobileOpen]       = useState(false);
+  const [isMobile,         setIsMobile]         = useState(window.innerWidth <= 900);
 
   const [currentUser] = useState({ name: "Franklin", score: 95 });
-
   const isAuthenticated = !!token;
 
-  // ✅ Listen for screen resize to update isMobile
+  // Track resize
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 900);
-      if (window.innerWidth > 900) setMobileOpen(false); // close on desktop
+    const onResize = () => {
+      const mobile = window.innerWidth <= 900;
+      setIsMobile(mobile);
+      if (!mobile) setMobileOpen(false);
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // Redirect to auth if not logged in
   useEffect(() => {
     if (!isAuthenticated && PROTECTED_COMPONENTS.includes(activeComponent)) {
       setActiveComponent("Auth");
@@ -88,16 +80,14 @@ function App() {
     localStorage.setItem("theme", theme);
   }, [darkMode]);
 
-  // ✅ Close sidebar when a nav item is clicked on mobile
-  const handleSetActiveComponent = (name) => {
-    setActiveComponent(name);
-    if (isMobile) setMobileOpen(false);
+  const handleSetActiveComponent = (comp) => {
+    setActiveComponent(comp);
+    if (isMobile) setMobileOpen(false); // close sidebar on mobile nav
   };
 
-  const handleLoginSuccess = (jwtToken) => {
-    if (!jwtToken) return;
-    localStorage.setItem("token", jwtToken);
-    setToken(jwtToken);
+  const handleLogin = (tok) => {
+    setToken(tok);
+    localStorage.setItem("token", tok);
     setActiveComponent("Dashboard");
   };
 
@@ -105,102 +95,78 @@ function App() {
     setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("activeComponent");
-    setActiveComponent("TasksView");
+    setActiveComponent("Auth");
   };
 
+  // ── Render page content ──────────────────────────────────────────────────
   const renderComponent = () => {
     switch (activeComponent) {
-      case "Auth":
-        return <AuthPage onLoginSuccess={handleLoginSuccess} />;
-      case "Dashboard":
-        return <DashboardPage token={token} darkMode={darkMode} />;
-      case "TaskGrid":
-        return <TaskGrid token={token} darkMode={darkMode} searchTerm={searchTerm} />;
-      case "TasksView":
-        return <TasksView token={token} darkMode={darkMode} searchTerm={searchTerm} />;
-      case "Reports":
-        return <Report darkMode={darkMode} />;
-      case "UserList":
-        return <UserList darkMode={darkMode} />;
-      case "Notification":
-        return (
-          <NotificationTasks
-            darkMode={darkMode}
-            token={token}
-            setActiveComponent={handleSetActiveComponent}
-          />
-        );
-      case "HelpAI":
-        return <HelpAI darkMode={darkMode} setActiveComponent={handleSetActiveComponent} />;
-      case "PrivacySettings":
-        return (
-          <PrivacySettings
-            userId={1}
-            darkMode={darkMode}
-            setActiveComponent={handleSetActiveComponent}
-          />
-        );
-      case "Integrations":
-        return (
-          <IntegrationSettings
-            token={token}
-            darkMode={darkMode}
-            currentUser={{ id: 1 }}
-            setActiveComponent={handleSetActiveComponent}
-          />
-        );
-      case "Settings":
-        return (
-          <Settings
-            darkMode={darkMode}
-            setDarkMode={setDarkMode}
-            onLogout={handleLogout}
-            setActiveComponent={handleSetActiveComponent}
-          />
-        );
-      case "Profile":
-        return <Profile darkMode={darkMode} setActiveComponent={handleSetActiveComponent} />;
-      case "SystemSettings":
-        return <SystemSettings darkMode={darkMode} setActiveComponent={handleSetActiveComponent} />;
-      case "ChangePassword":
-        return <ChangePassword darkMode={darkMode} setActiveComponent={handleSetActiveComponent} />;
-      case "Preferences":
-        return (
-          <PreferencesPage
-            userId={1}
-            darkMode={darkMode}
-            setActiveComponent={handleSetActiveComponent}
-          />
-        );
-      case "TodoPage":
-        return <TodoPage darkMode={darkMode} />;
-      case "NotesPage":
-        return <NotesPage darkMode={darkMode} />;
-      default:
-        return <TasksView token={token} darkMode={darkMode} searchTerm={searchTerm} />;
+      case "Dashboard":    return <DashboardPage token={token} darkMode={darkMode} />;
+      case "TaskGrid":     return <TaskGrid token={token} darkMode={darkMode} searchTerm={searchTerm} />;
+      case "Reports":      return <Report token={token} darkMode={darkMode} />;
+      case "UserList":     return <UserList token={token} darkMode={darkMode} />;
+      case "Notification": return <NotificationTasks token={token} darkMode={darkMode} />;
+      case "HelpAI":       return <HelpAI token={token} darkMode={darkMode} />;
+      case "Settings":     return <Settings token={token} darkMode={darkMode} setActiveComponent={handleSetActiveComponent} />;
+      case "PrivacySettings": return <PrivacySettings darkMode={darkMode} />;
+      case "Integrations": return <IntegrationSettings darkMode={darkMode} />;
+      case "SystemSettings": return <SystemSettings token={token} darkMode={darkMode} />;
+      case "Profile":      return <Profile token={token} darkMode={darkMode} setActiveComponent={handleSetActiveComponent} />;
+      case "ChangePassword": return <ChangePassword darkMode={darkMode} setActiveComponent={handleSetActiveComponent} />;
+      case "Preferences":  return <PreferencesPage userId={1} darkMode={darkMode} setActiveComponent={handleSetActiveComponent} />;
+      case "TodoPage":     return <TodoPage darkMode={darkMode} />;
+      case "NotesPage":    return <NotesPage darkMode={darkMode} />;
+      default:             return <TasksView token={token} darkMode={darkMode} searchTerm={searchTerm} />;
     }
   };
 
-  // ✅ On mobile → always use 0 margin (sidebar is overlay)
-  // On desktop → use normal sidebar width
-  const sidebarWidth = sidebarCollapsed ? SIDEBAR_COLLAPSED : SIDEBAR_FULL;
+  // ── Layout values ────────────────────────────────────────────────────────
+  const sidebarWidth   = sidebarCollapsed ? SIDEBAR_COLLAPSED : SIDEBAR_FULL;
+  const topNavHeight   = isMobile ? TOPNAV_HEIGHT_MOBILE : TOPNAV_HEIGHT_DESKTOP;
+  const mainMarginLeft = isMobile ? 0 : sidebarWidth;
+  const mainWidth      = isMobile ? "100%" : `calc(100% - ${sidebarWidth}px)`;
+  const mainPadding    = isMobile ? "10px" : sidebarCollapsed ? "24px 40px" : "24px 28px";
+  const innerMaxWidth  = isMobile ? "100%" : sidebarCollapsed ? "1400px" : "1200px";
 
+  // ════════════════════════════════════════════════════════════════════════
+  // ✅ NOT AUTHENTICATED — show ONLY the login/register page, full screen
+  //    No sidebar, no topnavbar
+  // ════════════════════════════════════════════════════════════════════════
+  if (!isAuthenticated) {
+    return (
+      <div
+        className={`app-container ${darkMode ? "dark" : ""}`}
+        style={{ display: "block", width: "100%", minHeight: "100vh" }}
+      >
+        <AuthPage
+          setToken={handleLogin}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+        />
+      </div>
+    );
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ✅ AUTHENTICATED — full layout with sidebar + topnavbar
+  // ════════════════════════════════════════════════════════════════════════
   return (
     <div className={`app-container ${darkMode ? "dark" : ""}`}>
 
-      {/* ✅ Sidebar */}
+      {/* Sidebar */}
       <Navbar
         activeComponent={activeComponent}
         setActiveComponent={handleSetActiveComponent}
         darkMode={darkMode}
         sidebarCollapsed={sidebarCollapsed}
         setSidebarCollapsed={setSidebarCollapsed}
-        mobileOpen={mobileOpen}        // ✅ NEW prop
-        setMobileOpen={setMobileOpen}  // ✅ NEW prop
-        isMobile={isMobile}            // ✅ NEW prop
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
+        isMobile={isMobile}
+        onLogout={handleLogout}
       />
 
-      {/* ✅ Dark overlay — tap to close sidebar on mobile */}
+      {/* Overlay to close sidebar on mobile tap-outside */}
       {isMobile && mobileOpen && (
         <div
           className="sidebar-overlay"
@@ -208,17 +174,18 @@ function App() {
         />
       )}
 
-      {/* ✅ Mobile hamburger button — fixed top left, only on mobile */}
+      {/* Hamburger button — only on mobile */}
       {isMobile && (
         <button
           className={`mobile-hamburger ${darkMode ? "dark" : ""}`}
           onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Open menu"
         >
           ☰
         </button>
       )}
 
-      {/* Top Navbar */}
+      {/* TopNavbar */}
       <TopNavbar
         setActiveComponent={handleSetActiveComponent}
         searchTerm={searchTerm}
@@ -227,29 +194,33 @@ function App() {
         setDarkMode={setDarkMode}
         currentUser={currentUser}
         sidebarCollapsed={sidebarCollapsed}
+        isMobile={isMobile}
+        onLogout={handleLogout}
       />
 
-      {/* ✅ Main content — mobile uses 0 margin, desktop uses sidebarWidth */}
+      {/* Main content */}
       <div
         className={`main-content ${darkMode ? "dark" : ""}`}
         style={{
-          marginLeft:  isMobile ? "0px" : `${sidebarWidth}px`,
-          marginTop:   `${TOPNAV_HEIGHT}px`,
-          width:       isMobile ? "100%" : `calc(100% - ${sidebarWidth}px)`,
-          minHeight:   `calc(100vh - ${TOPNAV_HEIGHT}px)`,
-          padding:     isMobile ? "16px" : sidebarCollapsed ? "24px 40px" : "24px 28px",
-          display:     "flex",
+          marginLeft:    `${mainMarginLeft}px`,
+          marginTop:     `${topNavHeight}px`,
+          width:         mainWidth,
+          minHeight:     `calc(100vh - ${topNavHeight}px)`,
+          padding:       mainPadding,
+          display:       "flex",
           flexDirection: "column",
-          alignItems:  "center",
-          transition:  "margin-left 0.3s ease, width 0.3s ease, padding 0.3s ease",
-          boxSizing:   "border-box",
+          alignItems:    "center",
+          transition:    "margin-left 0.3s ease, width 0.3s ease",
+          boxSizing:     "border-box",
+          overflowX:     "hidden",
         }}
       >
         <div
           style={{
-            width: "100%",
-            maxWidth: isMobile ? "100%" : sidebarCollapsed ? "1400px" : "1200px",
-            transition: "max-width 0.3s ease",
+            width:     "100%",
+            maxWidth:  innerMaxWidth,
+            transition:"max-width 0.3s ease",
+            overflowX: "hidden",
           }}
         >
           {renderComponent()}
