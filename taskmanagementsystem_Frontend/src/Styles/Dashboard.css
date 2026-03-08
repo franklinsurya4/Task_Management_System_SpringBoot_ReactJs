@@ -7,13 +7,16 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 32px; /* space between sections */
+  gap: 32px;
   font-family: 'Inter', sans-serif;
   background-color: #d8dadc;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .dashboard-container.dark {
-  background-color: #00000007;
+  background-color: #0d0d0d;
   color: #f0f0f0;
 }
 
@@ -28,17 +31,27 @@
   font-size: 28px;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 /* ===========================
-   KPI GRID
+   KPI GRID — 4 columns desktop
 =========================== */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px; /* space between KPI cards */
+  gap: 20px;
+  width: 100%;
+}
+
+/* Flatten any wrapper div KPICards puts around its cards */
+.kpi-grid > div {
+  display: contents;
 }
 
 /* ===========================
@@ -46,59 +59,59 @@
 =========================== */
 .chart-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 10px; /* space between charts */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
 }
 
-/* Each chart card styling */
 .chart-card {
   background: seashell;
-  border-radius: 20px;
-  padding: 24px;
-  min-height: 360px;
-  box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  padding: 20px;
+  min-height: 300px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06),
+              inset 0 1px 0 rgba(255,255,255,0.7);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: all 0.25s ease;
-
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
 }
 
 .dashboard-container.dark .chart-card {
-  background-color: gray;
+  background-color: #1e1e1e;
   box-shadow: 0 4px 12px rgba(0,0,0,0.6);
 }
 
 .chart-card:hover {
-  transform: translateY(-3px) scale(1.01);
-  box-shadow:
-    0 14px 30px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px) scale(1.005);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
 }
 
 /* ===========================
    AGING CARD
 =========================== */
-/* Default light mode */
 .aging-card {
-  background: linear-gradient(145deg, #ffffff, #f4f7fb); /* gradient for light */
-  border-radius: 20px;
+  background: linear-gradient(145deg, #ffffff, #f4f7fb);
+  border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06),
-              inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  transition: all 0.25s ease;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06),
+              inset 0 1px 0 rgba(255,255,255,0.7);
+  width: 100%;
+  box-sizing: border-box;
+  display: block !important;
+  visibility: visible !important;
+  min-height: 60px;
 }
 
-/* Dark mode */
 .dashboard-container.dark .aging-card {
-  background: gray; /* solid dark replaces gradient */
+  background: #1e1e1e;
   color: #f0f0f0;
   box-shadow: 0 2px 6px rgba(0,0,0,0.5);
 }
-
 
 /* ===========================
    LOADING
@@ -109,29 +122,179 @@
   text-align: center;
   padding: 80px 0;
 }
+.loading.dark { color: #9ca3af; }
 
 /* ===========================
-   RESPONSIVE GRID
+   TABLET (≤ 1024px)
 =========================== */
 @media (max-width: 1024px) {
+
+  .dashboard-container { padding: 20px; gap: 24px; }
+  .dashboard-title     { font-size: 24px; }
+
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .chart-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .kpi-grid {
-    grid-template-columns: 1fr;
     gap: 16px;
   }
 
-  .chart-card,
-  .aging-card {
-    padding: 16px;
-    min-height: 280px;
+  .chart-grid { grid-template-columns: 1fr; }
+  .chart-card { min-height: 280px; }
+}
+
+/* ===========================
+   MOBILE (≤ 768px)
+=========================== */
+@media (max-width: 768px) {
+
+  .dashboard-container { padding: 12px; gap: 14px; }
+
+  .dashboard-title { font-size: 18px; margin-bottom: 0; gap: 6px; }
+
+  /* ✅ KPI: 2×2 centered grid */
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    max-width: 340px;
+    margin: 0 auto;
+    width: 100%;
   }
+
+  .kpi-grid > div { display: contents; }
+
+  /* ✅ Reduce every element inside kpi-grid */
+  /* Targets all direct children after flattening */
+  .kpi-grid > *:not(div) {
+    padding:    10px !important;
+    min-height: unset !important;
+    min-width:  unset !important;
+    font-size:  13px !important;
+    border-radius: 10px !important;
+  }
+
+  /* ✅ Also target common KPI card class names */
+  .kpi-grid .kpi-card,
+  .kpi-grid .kpi-item,
+  .kpi-grid .stat-card,
+  .kpi-grid .metric-card,
+  .kpi-grid [class*="kpi"],
+  .kpi-grid [class*="stat"],
+  .kpi-grid [class*="metric"],
+  .kpi-grid [class*="card"] {
+    padding:       10px !important;
+    min-height:    unset !important;
+    border-radius: 10px !important;
+  }
+
+  /* ✅ Text inside KPI cards */
+  .kpi-grid [class*="kpi"] h2,
+  .kpi-grid [class*="kpi"] h3,
+  .kpi-grid [class*="kpi"] p,
+  .kpi-grid [class*="card"] h2,
+  .kpi-grid [class*="card"] h3,
+  .kpi-grid [class*="card"] p,
+  .kpi-grid [class*="stat"] h2,
+  .kpi-grid [class*="stat"] h3,
+  .kpi-grid [class*="stat"] p {
+    font-size:   12px !important;
+    margin:      2px 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ✅ Number/value inside KPI cards */
+  .kpi-grid [class*="kpi"] span,
+  .kpi-grid [class*="card"] span,
+  .kpi-grid [class*="stat"] span {
+    font-size: 18px !important;
+  }
+
+  /* ✅ Icon inside KPI */
+  .kpi-grid svg {
+    font-size: 16px !important;
+    width:     16px !important;
+    height:    16px !important;
+  }
+
+  /* Charts */
+  .chart-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .chart-card {
+    padding:    12px 10px;
+    min-height: 200px;
+    border-radius: 12px;
+    overflow:   hidden;
+    max-width:  100%;
+  }
+
+  /* Aging */
+  .aging-card {
+    padding:    14px 12px;
+    border-radius: 12px;
+    display:    block !important;
+    visibility: visible !important;
+    overflow-x: auto;
+  }
+
+  .chart-card:hover { transform: none; }
+}
+
+/* ===========================
+   SMALL MOBILE (≤ 480px)
+=========================== */
+@media (max-width: 480px) {
+
+  .dashboard-container { padding: 8px 6px; gap: 10px; }
+  .dashboard-title     { font-size: 15px; gap: 5px; }
+
+  /* ✅ Even smaller KPI on tiny screens */
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .kpi-grid > div { display: contents; }
+
+  .kpi-grid > *:not(div) {
+    padding: 8px !important;
+  }
+
+  .kpi-grid .kpi-card,
+  .kpi-grid .kpi-item,
+  .kpi-grid .stat-card,
+  .kpi-grid .metric-card,
+  .kpi-grid [class*="kpi"],
+  .kpi-grid [class*="stat"],
+  .kpi-grid [class*="metric"],
+  .kpi-grid [class*="card"] {
+    padding: 8px !important;
+  }
+
+  .kpi-grid [class*="kpi"] span,
+  .kpi-grid [class*="card"] span,
+  .kpi-grid [class*="stat"] span {
+    font-size: 16px !important;
+  }
+
+  .kpi-grid [class*="kpi"] h2,
+  .kpi-grid [class*="kpi"] h3,
+  .kpi-grid [class*="kpi"] p,
+  .kpi-grid [class*="card"] h2,
+  .kpi-grid [class*="card"] h3,
+  .kpi-grid [class*="card"] p {
+    font-size: 11px !important;
+  }
+
+  .kpi-grid svg {
+    font-size: 14px !important;
+    width:     14px !important;
+    height:    14px !important;
+  }
+
+  .chart-card  { padding: 10px 8px; min-height: 170px; border-radius: 10px; }
+  .aging-card  { padding: 10px 8px; border-radius: 10px; display: block !important; visibility: visible !important; }
+  .loading     { font-size: 14px; padding: 30px 0; }
 }

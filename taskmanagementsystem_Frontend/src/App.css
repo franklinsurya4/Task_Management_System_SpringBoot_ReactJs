@@ -1,70 +1,181 @@
-/* ── Single source of truth for theme variables ── */
+/* ══════════════════════════════════════════════════════════════════════════
+   THEME VARIABLES
+   ══════════════════════════════════════════════════════════════════════════ */
 :root {
-  --bg-color:      #fff;
-  --text-color:    #111111;
-  --card-bg:       #f4f4f4;
-  --border-color:  #dddddd;
-  --navbar-bg:     #f5f5f5;
-  --navbar-text:   #000000;
-  --button-bg:     #e0e0e0;
-  --button-text:   #000000;
-  --main-content-bg: #ffffff;   /* ← main content background */
+  --bg-color:          #ffffff;
+  --text-color:        #111111;
+  --card-bg:           #f4f4f4;
+  --border-color:      #dddddd;
+  --navbar-bg:         #f5f5f5;
+  --navbar-text:       #000000;
+  --button-bg:         #e0e0e0;
+  --button-text:       #000000;
+  --main-content-bg:   #ffffff;
+  --sidebar-bg:        #f5f5f5;
 }
 
 [data-theme="dark"] {
-  --bg-color:      #121212;
-  --text-color:    #eaeaea;
-  --card-bg:       #1e1e1e;
-  --border-color:  #333333;
-  --navbar-bg:     #1f1f1f;
-  --navbar-text:   #ffffff;
-  --button-bg:     #333333;
-  --button-text:   #ffffff;
-  --main-content-bg: #2a2a2a;   /* ← constant gray for main content in dark mode */
+  --bg-color:          #000000;   /* ✅ Pure black background */
+  --text-color:        #eaeaea;
+  --card-bg:           #111111;   /* ✅ Dark cards */
+  --border-color:      #222222;
+  --navbar-bg:         #0a0a0a;   /* ✅ Near black navbar */
+  --navbar-text:       #ffffff;
+  --button-bg:         #222222;
+  --button-text:       #ffffff;
+  --main-content-bg:   #000000;   /* ✅ Black main content */
+  --sidebar-bg:        #111111;
 }
 
-/* Apply to body */
+/* ══════════════════════════════════════════════════════════════════════════
+   GLOBAL BASE
+   ══════════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent; /* Remove tap flash on mobile */
+}
+
 body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+}
+
+img, video {
+  max-width: 100%;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   APP CONTAINER
+   ══════════════════════════════════════════════════════════════════════════ */
+.app-container {
+  min-height: 100vh;
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Main content area gets its own gray in dark mode */
+.app-container.dark {
+  background-color: #000000; /* ✅ Force black in dark mode */
+  color: #eaeaea;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MAIN CONTENT AREA
+   ══════════════════════════════════════════════════════════════════════════ */
 .main-content {
   background-color: var(--main-content-bg);
   color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    margin-left 0.3s ease,
+    width 0.3s ease;
 }
 
-/* Responsive base */
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent; /* Remove tap flash on mobile */
+.main-content.dark {
+  background-color: #000000; /* ✅ Black background in dark mode */
+  color: #eaeaea;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+/* ══════════════════════════════════════════════════════════════════════════
+   CARDS
+   ══════════════════════════════════════════════════════════════════════════ */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 16px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Responsive container */
-.container {
+[data-theme="dark"] .card {
+  background-color: #111111;
+  border-color: #222222;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BUTTONS
+   ══════════════════════════════════════════════════════════════════════════ */
+button {
+  min-height: 44px;   /* ✅ Touch-friendly tap target */
+  min-width: 44px;
+  cursor: pointer;
+  touch-action: manipulation;
+  font-family: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   INPUTS
+   ══════════════════════════════════════════════════════════════════════════ */
+input, select, textarea {
+  font-size: 16px;    /* ✅ Prevents iOS auto-zoom on focus */
+  font-family: inherit;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Mobile breakpoints */
-@media (max-width: 768px) {
-  .task-grid       { grid-template-columns: 1fr; }       /* 1 column on mobile */
-  .sidebar         { display: none; }                     /* Hide sidebar */
-  .mobile-nav      { display: flex; }                     /* Show bottom nav */
-  button, .btn     { min-height: 44px; min-width: 44px; } /* Touch targets */
-  input, select    { font-size: 16px; }                   /* Prevent iOS zoom */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #111111;
+  color: #eaeaea;
+  border-color: #333333;
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .task-grid { grid-template-columns: repeat(2, 1fr); }  /* 2 cols on tablet */
+/* ══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR (dark mode)
+   ══════════════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 6px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+
+  /* ✅ Main content — full width, no sidebar margin on mobile */
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    margin-top: 60px !important;
+    padding: 16px !important;
+  }
+
+  /* ✅ Buttons full width on mobile */
+  .btn-full-mobile {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  /* ✅ Tables scroll horizontally */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ✅ Grid → single column on mobile */
+  .task-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

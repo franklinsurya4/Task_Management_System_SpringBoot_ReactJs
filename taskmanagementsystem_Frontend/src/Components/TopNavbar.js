@@ -13,10 +13,9 @@ import {
 
 import { useTranslation } from "react-i18next";
 import { generateCertificate } from "../Components/Certificate";
-
 import { Link } from "react-router-dom";
 
-const SIDEBAR_EXPANDED = 220;
+const SIDEBAR_EXPANDED  = 220;
 const SIDEBAR_COLLAPSED = 60;
 
 function TopNavbar({
@@ -26,23 +25,18 @@ function TopNavbar({
   darkMode,
   setDarkMode,
   currentUser,
-  sidebarCollapsed
+  sidebarCollapsed,
+  isMobile,           // ✅ passed from App.js
 }) {
-
   const { t } = useTranslation();
 
   const handleDownloadCertificate = async () => {
-
-    if (!currentUser) {
-      alert("User data not available");
-      return;
-    }
-
+    if (!currentUser) { alert("User data not available"); return; }
     try {
       await generateCertificate({
         name: currentUser.name || "User",
         score: currentUser.score || "N/A",
-        darkMode
+        darkMode,
       });
     } catch (error) {
       console.error(error);
@@ -50,37 +44,21 @@ function TopNavbar({
     }
   };
 
-  const offset = sidebarCollapsed
-    ? SIDEBAR_COLLAPSED
-    : SIDEBAR_EXPANDED;
+  const offset = sidebarCollapsed ? SIDEBAR_COLLAPSED : SIDEBAR_EXPANDED;
 
   return (
-
     <div
       className={`top-navbar ${darkMode ? "dark" : ""}`}
       style={{
-        position: "fixed",
-        top: 0,
-        left: `${offset}px`,
-        width: `calc(100% - ${offset}px)`,
-        transition: "left 0.3s ease, width 0.3s ease",
-        zIndex: 999,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between"
+        left:   isMobile ? "0px" : `${offset}px`,
+        width:  isMobile ? "100%" : `calc(100% - ${offset}px)`,
       }}
     >
 
-      {/* LEFT SIDE */}
+      {/* ── LEFT — search (hidden on mobile via CSS) ── */}
       <div className="top-navbar-left">
-
         <div className={`search-wrapper ${darkMode ? "dark" : "light"}`}>
-
-          <FontAwesomeIcon
-            icon={faSearch}
-            className="search-icon"
-          />
-
+          <FontAwesomeIcon icon={faSearch} className="search-icon" />
           <input
             type="text"
             placeholder={t("searchTasks") || "Search tasks"}
@@ -88,100 +66,81 @@ function TopNavbar({
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
-
         </div>
-
       </div>
 
-
-      {/* RIGHT SIDE */}
-      <div
-        className="top-navbar-right"
-        style={{
-          paddingRight: sidebarCollapsed ? "12px" : "30px"
-        }}
-      >
+      {/* ── RIGHT — nav links + buttons ── */}
+      <div className="top-navbar-right">
 
         {/* USERS */}
         <Link
           to="/users"
           className="nav-link"
           onClick={() => setActiveComponent("UserList")}
-          style={{ display: "flex", alignItems: "center", gap: "6px" }}
         >
-          <FontAwesomeIcon icon={faUsers} />
-          {t("usersList") || "Users"}
+          <FontAwesomeIcon icon={faUsers} className="nav-icon" />
+          <span className="nav-label">{t("usersList") || "Users"}</span>
         </Link>
-
 
         {/* TASKS */}
         <Link
           to="/tasks"
           className="nav-link"
           onClick={() => setActiveComponent("TasksView")}
-          style={{ display: "flex", alignItems: "center", gap: "6px" }}
         >
-          <FontAwesomeIcon icon={faTasks} />
-          {t("tasksList") || "Tasks"}
+          <FontAwesomeIcon icon={faTasks} className="nav-icon" />
+          <span className="nav-label">{t("tasksList") || "Tasks"}</span>
         </Link>
-
 
         {/* TODO */}
         <Link
           to="/todo"
           className="nav-link"
           onClick={() => setActiveComponent("TodoPage")}
-          style={{ display: "flex", alignItems: "center", gap: "6px" }}
         >
-          <FontAwesomeIcon icon={faListCheck} />
-          {t("todo") || "Todo"}
+          <FontAwesomeIcon icon={faListCheck} className="nav-icon" />
+          <span className="nav-label">{t("todo") || "Todo"}</span>
         </Link>
-
 
         {/* NOTES */}
         <Link
           to="/notes"
           className="nav-link"
           onClick={() => setActiveComponent("NotesPage")}
-          style={{ display: "flex", alignItems: "center", gap: "6px" }}
         >
-          <FontAwesomeIcon icon={faNoteSticky} />
-          {t("Notes") || "Notes"}
+          <FontAwesomeIcon icon={faNoteSticky} className="nav-icon" />
+          <span className="nav-label">{t("Notes") || "Notes"}</span>
         </Link>
 
-
-        {/* CERTIFICATE */}
+        {/* CERTIFICATE — icon only on mobile, icon+text on desktop */}
         <button
           className="download-btn"
           onClick={handleDownloadCertificate}
+          title="Download Certificate"
         >
-          <FontAwesomeIcon icon={faDownload} style={{ marginRight: "6px" }} />
-          {t("Certificate") || "Certificate"}
+          <FontAwesomeIcon icon={faDownload} className="nav-icon" />
+          <span className="nav-label" style={{ marginLeft: "6px" }}>
+            {t("Certificate") || "Certificate"}
+          </span>
         </button>
 
-
-        {/* DARK MODE */}
+        {/* DARK MODE TOGGLE */}
         <div className="toggle-switch">
-
           <input
             type="checkbox"
             id="darkModeToggle"
             checked={darkMode}
             onChange={() => setDarkMode(!darkMode)}
           />
-
           <label htmlFor="darkModeToggle">
             <span className="toggle-switch-circle">
-              {darkMode ? t("on") : t("off")}
+              {darkMode ? "🌙" : "☀️"}
             </span>
           </label>
-
         </div>
 
       </div>
-
     </div>
-
   );
 }
 
